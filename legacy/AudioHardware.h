@@ -176,6 +176,7 @@ public:
     virtual status_t    setMasterVolume(float volume);
 
     virtual status_t    setMode(int mode);
+    virtual status_t    setMasterMute(bool muted);
 
     // mic mute
     virtual status_t    setMicMute(bool state);
@@ -212,6 +213,18 @@ public:
     virtual size_t getInputBufferSize(uint32_t sampleRate, int format, int channelCount);
 
                void        clearCurDevice() { mCurSndDevice = -1; }
+
+    virtual int createAudioPatch(unsigned int num_sources,
+                                const struct audio_port_config *sources,
+                                unsigned int num_sinks,
+                                const struct audio_port_config *sinks,
+                                audio_patch_handle_t *handle);
+
+    virtual int releaseAudioPatch(audio_patch_handle_t handle);
+
+    virtual int getAudioPort(struct audio_port *port);
+
+    virtual int setAudioPortConfig(const struct audio_port_config *config);
 
 protected:
     virtual status_t    dump(int fd, const Vector<String16>& args);
@@ -262,6 +275,7 @@ private:
         virtual String8     getParameters(const String8& keys);
                 uint32_t    devices() { return mDevices; }
         virtual status_t    getRenderPosition(uint32_t *dspFrames);
+        virtual status_t    getPresentationPosition(uint64_t *frames, struct timespec *timestamp);
 
     private:
                 AudioHardware* mHardware;
