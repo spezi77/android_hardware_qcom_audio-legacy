@@ -1526,6 +1526,35 @@ uint32_t AudioHardware::getInputSampleRate(uint32_t sampleRate)
     return inputSamplingRates[i-1];
 }
 
+status_t AudioHardware::setMasterMute(bool muted)
+{
+    return -1;
+}
+
+int AudioHardware::createAudioPatch(unsigned int num_sources,
+                               const struct audio_port_config *sources,
+                               unsigned int num_sinks,
+                               const struct audio_port_config *sinks,
+                               audio_patch_handle_t *handle)
+{
+    return -1;
+}
+
+int AudioHardware::releaseAudioPatch(audio_patch_handle_t handle)
+{
+    return -1;
+}
+
+int AudioHardware::getAudioPort(struct audio_port *port)
+{
+    return -1;
+}
+
+int AudioHardware::setAudioPortConfig(const struct audio_port_config *config)
+{
+    return -1;
+}
+
 // getActiveInput_l() must be called with mLock held
 AudioHardware::AudioStreamInMSM72xx *AudioHardware::getActiveInput_l()
 {
@@ -1769,6 +1798,11 @@ String8 AudioHardware::AudioStreamOutMSM72xx::getParameters(const String8& keys)
 status_t AudioHardware::AudioStreamOutMSM72xx::getRenderPosition(uint32_t *dspFrames)
 {
     //TODO: enable when supported by driver
+    return INVALID_OPERATION;
+}
+
+status_t AudioStreamOut::getPresentationPosition(uint64_t *frames, struct timespec *timestamp)
+{
     return INVALID_OPERATION;
 }
 
